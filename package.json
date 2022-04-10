@@ -45,7 +45,7 @@
     "express": "^4.17.1",
     "get-system-fonts": "^2.0.2",
     "jquery": "^3.5.1",
-    "moment": "^2.27.0",
+    "moment": "^2.29.2",
     "monaco-editor": "^0.20.0",
     "nzh": "^1.0.4",
     "pinyin": "^2.9.1",
