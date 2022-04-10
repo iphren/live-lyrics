@@ -303,7 +303,7 @@ textarea.control {
 }
 
 #send {
-    display: contents;
+    display: flex;
     position: relative;
 }
 
