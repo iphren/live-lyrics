@@ -170,6 +170,7 @@ function toggleHide(e = null) {
 }
 
 sendBtn.onmousedown = sendPlaylist;
+receiveBtn.onmousedown = getPlaylist;
 
 liveStats.onmousedown = function(e) {
     e.stopPropagation();

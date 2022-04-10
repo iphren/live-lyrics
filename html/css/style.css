@@ -303,7 +303,7 @@ textarea.control {
 }
 
 #send {
-    display: inline-block;
+    display: contents;
     position: relative;
 }
 
@@ -313,6 +313,10 @@ textarea.control {
 
 #sendBtn.success {
     background-color: #4caf50;
+}
+
+#receiveBtn {
+    background-color: goldenrod;
 }
 
 #plURL {

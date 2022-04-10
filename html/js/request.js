@@ -5,7 +5,7 @@ function post(url, data) {
     xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
     return new Promise((resolve, reject) => {
         xhr.onreadystatechange = function () {
-            if(xhr.readyState === XMLHttpRequest.DONE) {
+            if (xhr.readyState === XMLHttpRequest.DONE) {
                 if (xhr.status === 200) {
                     resolve(xhr.response);
                 } else {
@@ -26,7 +26,7 @@ function get(options) {
     }
     return new Promise((resolve, reject) => {
         xhr.onreadystatechange = function () {
-            if(xhr.readyState === XMLHttpRequest.DONE) {
+            if (xhr.readyState === XMLHttpRequest.DONE) {
                 if (xhr.status === 200) {
                     resolve(xhr.response);
                 } else {
@@ -51,15 +51,42 @@ function sendPlaylist(e = null) {
         let v = o.getAttribute('value');
         if (v) pl.push(JSON.parse(v));
     }
-    post(`https://${plURL.value}`,{playlist: pl, token: password.value})
-    .then(() => {
-        app.save('plURL',plURL.value);
-        plURL.classList.add('none');
-        sendBtn.classList.add('success');
-        setTimeout(function(){
-            sendBtn.classList.remove('success');
-        },1000);
-    }).catch(() => {
+    post(`https://${plURL.value}`, { playlist: pl, token: password.value })
+        .then(() => {
+            app.save('plURL', plURL.value);
+            plURL.classList.add('none');
+            sendBtn.classList.add('success');
+            setTimeout(function () {
+                sendBtn.classList.remove('success');
+            }, 1000);
+        }).catch(() => {
+            plURL.classList.remove('none');
+        });
+}
+
+function getPlaylist(e = null) {
+    if (e) e.preventDefault();
+    closeInfo();
+    if (!app.configs.plURL && !plURL.value) {
         plURL.classList.remove('none');
-    });
+        plURL.focus();
+        return;
+    }
+
+    get({ url: `https://${plURL.value}` })
+        .then((pl) => {
+            playlist.innerHTML = '';
+            addSong({ id: '_filter', title: '', lyrics: '' }, playlist);
+            for (let s of JSON.parse(pl)) {
+                addSong(s, playlist);
+            }
+            savePlaylist();
+            showLyrics();
+            changeFocus();
+            selectSong();
+            app.save('plURL', plURL.value);
+            plURL.classList.add('none');
+        }).catch(() => {
+            plURL.classList.remove('none');
+        });
 }
